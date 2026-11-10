@@ -49,10 +49,10 @@ Commit:     558caafe7ba067467de46b320cc22ef11fef9c34
 Date:       n/a
 ```
 
-## AWS-CLI
+## AWS-CLI V2
 
 ```
-aws-cli/2.17.38 Python/3.11.9 Darwin/24.6.0 exe/x86_64
+aws-cli/2.39.7 Python/3.14.8 Darwin/24.6.0 script-exe/arm64
 ```
 
 ## Kind

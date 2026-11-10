@@ -1,1 +1,8 @@
 /.idea/
+target/
+*.iml
+.terraform/
+*.tfstate*
+.env
+tmp/
+local/floci/data/
