@@ -1,0 +1,17 @@
+services:
+  postgres:
+    image: postgres:17.2-alpine3.21
+    container_name: expense-postgres
+    environment:
+      POSTGRES_DB: expense
+      POSTGRES_USER: expense
+      POSTGRES_PASSWORD: expense
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./expense-pgdata:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U expense -d expense"]
+      interval: 5s
+      timeout: 3s
+      retries: 10

@@ -1,0 +1,67 @@
+@baseUrl = http://localhost:8081
+
+### Create expense (201 + Location)
+POST {{baseUrl}}/expenses
+Content-Type: application/json
+
+{
+  "amount": 20.00,
+  "currency": "USD",
+  "category": "food",
+  "description": "dinner",
+  "spentAt": "2026-11-01"
+}
+
+> {%
+    client.test("created", () => client.assert(response.status === 201));
+    client.global.set("expenseId", response.body.id);
+%}
+
+### Create expense without description
+POST {{baseUrl}}/expenses
+Content-Type: application/json
+
+{
+  "amount": 100000,
+  "currency": "IDR",
+  "category": "transport",
+  "spentAt": "2026-11-02"
+}
+
+### Create expense - validation failure (400): negative amount, bad currency, future date
+POST {{baseUrl}}/expenses
+Content-Type: application/json
+
+{
+  "amount": -1,
+  "currency": "ID",
+  "category": "food",
+  "spentAt": "2999-01-01"
+}
+
+### Get expense by id (200)
+GET {{baseUrl}}/expenses/{{expenseId}}
+
+### Get expense by id - not found (404)
+GET {{baseUrl}}/expenses/999999
+
+### List expenses for a month
+GET {{baseUrl}}/expenses?month=2026-11
+
+### List expenses - invalid month (400)
+GET {{baseUrl}}/expenses?month=2026-13
+
+### List expenses - missing month (400)
+GET {{baseUrl}}/expenses
+
+### Summary for a month
+GET {{baseUrl}}/summary?month=2026-11
+
+### Summary for current month (default)
+GET {{baseUrl}}/summary
+
+### Liveness
+GET {{baseUrl}}/actuator/health/liveness
+
+### Readiness (includes DB)
+GET {{baseUrl}}/actuator/health/readiness
